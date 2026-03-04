@@ -10,9 +10,11 @@ public class UserPublico extends User {
         setTipoCuenta(TipoCuenta.PUBLICA);
         
     }
+    UserPublico(String nombre, Genero genero, String userName, String password, int edad,String rutaFoto,TipoCuenta tipoCuenta, long fechaCreacion, boolean estadoActivo){
+        super(nombre,genero,userName,password,edad,rutaFoto,tipoCuenta,fechaCreacion,estadoActivo);
+    }
+    @Override
     public boolean puedeEnviarMensaje(User otro){
-        if(otro.getTipoCuenta()==TipoCuenta.PRIVADA)
-            return false;
         return true;
         
     }

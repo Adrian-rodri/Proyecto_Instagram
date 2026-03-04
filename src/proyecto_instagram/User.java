@@ -6,12 +6,14 @@ package proyecto_instagram;
  */
 import java.util.Calendar;
 import java.time.LocalDate;
+import java.util.Date;
 public abstract class User {
     private String nombre;
     private Genero genero;
     private String userName;
     private String password;
-    private String fechaCreacion;
+    private long fechaCreacion;
+    private Date fecha;
     private int edad;
     private boolean estadoActivo;
     private String rutaFoto;
@@ -22,11 +24,24 @@ public abstract class User {
         this.genero=genero;
         this.userName=userName;
         this.password=password;
-        this.fechaCreacion=LocalDate.now().toString();
+        this.fechaCreacion=System.currentTimeMillis();
+        fecha= new Date(fechaCreacion);
         this.edad=edad;
         this.estadoActivo=true;
-        this.rutaFoto=null;
+        this.rutaFoto="";
         this.tipoCuenta=TipoCuenta.PUBLICA;
+    }
+    User(String nombre, Genero genero, String userName, String password, int edad,String rutaFoto,TipoCuenta tipoCuenta, long fechaCreacion, boolean estadoActivo){
+        this.nombre=nombre;
+        this.genero=genero;
+        this.userName=userName;
+        this.password=password;
+        this.fechaCreacion=fechaCreacion;
+        fecha= new Date(fechaCreacion);
+        this.edad=edad;
+        this.estadoActivo=estadoActivo;
+        this.rutaFoto=rutaFoto;
+        this.tipoCuenta=tipoCuenta;
     }
 
     public void setNombre(String nombre) {
@@ -69,7 +84,7 @@ public abstract class User {
         return password;
     }
 
-    public String getFechaCreacion() {
+    public Long getFechaCreacion() {
         return fechaCreacion;
     }
 

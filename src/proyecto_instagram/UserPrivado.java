@@ -1,13 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package proyecto_instagram;
 
 /**
  *
  * @author adria
  */
-public class UserPrivado {
-    
+public class UserPrivado extends User{
+    UserPrivado(String nombre, Genero genero, String userName, String password, int edad){
+        super(nombre,genero,userName,password,edad);
+        setTipoCuenta(TipoCuenta.PRIVADA);
+    }
+    UserPrivado(String nombre, Genero genero, String userName, String password, int edad,String rutaFoto,TipoCuenta tipoCuenta, long fechaCreacion, boolean estadoActivo){
+        super(nombre,genero,userName,password,edad,rutaFoto,tipoCuenta,fechaCreacion,estadoActivo);
+    }
+    @Override
+    public boolean puedeEnviarMensaje(User otro){
+        return false;
+        
+    }
 }
