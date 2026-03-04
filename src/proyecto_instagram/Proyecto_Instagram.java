@@ -7,6 +7,7 @@ package proyecto_instagram;
 import java.awt.GraphicsEnvironment;
 public class Proyecto_Instagram {
     public static void main(String[] args){
+       
         Gui q= new Gui();
   
 
