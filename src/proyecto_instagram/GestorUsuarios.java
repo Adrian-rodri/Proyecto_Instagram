@@ -5,6 +5,7 @@ package proyecto_instagram;
  * @author adria
  */
 import java.io.*;
+import java.util.ArrayList;
 public class GestorUsuarios {
     /*
     1. writeUTF(nombre)
@@ -22,15 +23,8 @@ public class GestorUsuarios {
         try{
         users = new RandomAccessFile("INSTA_RAIZ/users.ins", "rw");
         users.seek(users.length());
-        users.writeUTF(actual.getNombre());
-        users.writeUTF(actual.getGenero().toString());
-        users.writeUTF(actual.getUserName());
-        users.writeUTF(actual.getPassword());
-        users.writeUTF(actual.getRutaFoto());
-        users.writeUTF(actual.getTipoCuenta().toString());
-        users.writeLong(actual.getFechaCreacion());
-        users.writeInt(actual.getEdad());
-        users.writeBoolean(actual.isEstadoActivo());
+        writeUser(actual);
+        crearFolderConFiles(actual);
         }catch(IOException e){
             System.err.println("Error: "+ e.getMessage());
         }finally{
@@ -84,6 +78,8 @@ public class GestorUsuarios {
     }
     public boolean existeUser(String username){
         try{
+            File file= new File("INSTA_RAIZ/users.ins");
+            file.createNewFile();
             users = new RandomAccessFile("INSTA_RAIZ/users.ins", "r");
             users.seek(0);
             while(users.getFilePointer()<users.length()){
@@ -111,6 +107,77 @@ public class GestorUsuarios {
             return false;
     }
     public void actualizarUser(User user){
-        
+        try {
+            ArrayList<User> arrayUser= new ArrayList<>();
+            users= new RandomAccessFile("INSTA_RAIZ/users.ins","rw");
+            users.seek(0);
+            while(users.getFilePointer()<users.length()){
+                String name= users.readUTF();
+                Genero genero= Genero.valueOf(users.readUTF());
+                String username= users.readUTF();
+                String contra= users.readUTF();
+                String path= users.readUTF();
+                TipoCuenta tipo= TipoCuenta.valueOf(users.readUTF());
+                long fecha= users.readLong();
+                int edad= users.readInt();
+                boolean estado= users.readBoolean();
+                if(tipo==TipoCuenta.PUBLICA){
+                    UserPublico usuario= new UserPublico(name, genero,username,contra,edad,path,tipo,fecha,estado);
+                    arrayUser.add(usuario);
+                }else{
+                    UserPrivado usuario=new UserPrivado(name, genero,username,contra,edad,path,tipo,fecha,estado);
+                    arrayUser.add(usuario);
+                }
+            }
+            
+            int index=-1;
+            for(int i=0;i<arrayUser.size();i++){
+                if(arrayUser.get(i).getUserName().equals(user.getUserName())){
+                    index=i;
+                }
+            }
+            if(index != -1){
+                arrayUser.set(index, user);
+            }
+            users.setLength(0);
+            for(User u:arrayUser){
+                writeUser(u);
+                
+            }
+        } catch (IOException e) {
+            System.err.println("Error: "+ e.getMessage());
+        }finally{
+            try{
+            if(users!=null)
+                users.close();
+            }catch(IOException e){
+                System.err.println("Error: "+ e.getMessage());
+            }
+        }
+    }
+    private void writeUser(User user)throws IOException{
+        users.writeUTF(user.getNombre());
+        users.writeUTF(user.getGenero().toString());
+        users.writeUTF(user.getUserName());
+        users.writeUTF(user.getPassword());
+        users.writeUTF(user.getRutaFoto());
+        users.writeUTF(user.getTipoCuenta().toString());
+        users.writeLong(user.getFechaCreacion());
+        users.writeInt(user.getEdad());
+        users.writeBoolean(user.isEstadoActivo());
+    }
+    private void crearFolderConFiles(User actual)throws IOException{
+        File carpeta = new File("INSTA_RAIZ/" + actual.getUserName());
+        carpeta.mkdirs();
+        File file= new File("INSTA_RAIZ/" + actual.getUserName()+"/followers.ins");
+        file.createNewFile();
+        file= new File("INSTA_RAIZ/" + actual.getUserName()+"/following.ins");
+        file.createNewFile();
+        file= new File("INSTA_RAIZ/" + actual.getUserName()+"/inbox.ins");
+        file.createNewFile();
+        file= new File("INSTA_RAIZ/" + actual.getUserName()+"/insta.ins");
+        file.createNewFile();
+        file= new File("INSTA_RAIZ/" + actual.getUserName()+"/stickers.ins");
+        file.createNewFile();
     }
 }
