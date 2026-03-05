@@ -10,7 +10,11 @@ public class GestorFollowers {
     RandomAccessFile following=null;
     RandomAccessFile followers=null;
     RandomAccessFile raf = null;
-    public void seguir(User actual, User otro){
+    User actual;
+    GestorFollowers(User user){
+        this.actual=user;
+    }
+    public void seguir( User otro){
         try{
             following= new RandomAccessFile("INSTA_RAIZ/"+actual.getUserName()+"/following.ins","rw");
             followers= new RandomAccessFile("INSTA_RAIZ/"+otro.getUserName()+"/followers.ins","rw");
@@ -37,7 +41,7 @@ public class GestorFollowers {
             }
         }
     }
-    public void dejarDeSeguir(User actual,User otro){
+    public void dejarDeSeguir(User otro){
         try{
             following= new RandomAccessFile("INSTA_RAIZ/"+actual.getUserName()+"/following.ins","rw");
             followers= new RandomAccessFile("INSTA_RAIZ/"+otro.getUserName()+"/followers.ins","rw");
@@ -87,7 +91,7 @@ public class GestorFollowers {
             }
         }
     }
-    public boolean SeSiguenMutuamente(User actual, User otro){
+    public boolean SeSiguenMutuamente( User otro){
         String rutaActual="INSTA_RAIZ/"+actual.getUserName()+"/following.ins";
         String rutaOtro="INSTA_RAIZ/"+otro.getUserName()+"/following.ins";
         return existeEn(rutaActual,otro.getUserName()) && existeEn(rutaOtro,actual.getUserName());
@@ -114,7 +118,7 @@ public class GestorFollowers {
         }
         return false;
     }
-    public ArrayList<String> getFollowers(User actual){
+    public ArrayList<String> getFollowers(){
         ArrayList<String> arrayFollowers= new ArrayList<>();
     
         try{
@@ -136,7 +140,7 @@ public class GestorFollowers {
         
         return arrayFollowers;
     }
-    public ArrayList<String> getFollowing(User actual){
+    public ArrayList<String> getFollowing(){
         ArrayList<String> arrayFollowing= new ArrayList<>();
     
         try{

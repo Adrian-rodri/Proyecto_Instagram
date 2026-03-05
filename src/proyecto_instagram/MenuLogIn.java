@@ -15,6 +15,7 @@ public class MenuLogIn extends MenuBase{
     MenuLogIn(){
     
     }
+    @Override
     public void cargarComponentes(){
         /*
         Cuadro de atras
@@ -22,7 +23,7 @@ public class MenuLogIn extends MenuBase{
         JPanel n= new JPanel();
         n.setBounds(550,130,350,450);
         n.setVisible(true);
-        n.setBackground(new Color(0xF7F4F0));
+        n.setBackground(new Color(0xFAFAFA));
         n.setLayout( null);
         /*
         titulo
@@ -44,7 +45,7 @@ public class MenuLogIn extends MenuBase{
         Area de texto usuario
         */
         TextFieldTextoFantasma txtUsuario= new TextFieldTextoFantasma("Usuario");
-        txtUsuario.setBackground(new Color(0xF6F5F2));
+        txtUsuario.setBackground(new Color(0xFAFAFA));
         txtUsuario.setForeground(Color.black);
         txtUsuario.setBounds(50,120,250,50);
         txtUsuario.setFont(font);
@@ -56,7 +57,7 @@ public class MenuLogIn extends MenuBase{
         */
         JPasswordField txtContra= new JPasswordField();
         txtContra.setSize(300,40);
-        txtContra.setBackground(new Color(0xF6F5F2));
+        txtContra.setBackground(new Color(0xFAFAFA));
         txtContra.setForeground(Color.black);
         txtContra.setBounds(50,169,250,49);
         txtContra.setFont(font);
@@ -72,9 +73,10 @@ public class MenuLogIn extends MenuBase{
         Boton ver Contra
         */
         JButton btnVer=new JButton("👁️");
-        btnVer.setBounds(300,169,50,50);
-        btnVer.setBackground(new Color(0xF7F4F0));
+        btnVer.setBounds(285,169,50,50);
         btnVer.setBorderPainted(false);
+        btnVer.setMargin(new Insets(0,0,0,0));
+        btnVer.setContentAreaFilled(false);
         btnVer.addActionListener(e->{
             oculta=oculta?false:true;
         if(oculta){
@@ -106,14 +108,15 @@ public class MenuLogIn extends MenuBase{
                 return;
             }
             String contra= new String(txtContra.getPassword());
-            if(contra.isEmpty()||gestorUsuarios.login(usuario, contra)==null){
+            User user=gestorUsuarios.login(usuario, contra);
+            if(contra.isEmpty()||user==null){
                 error.setText("Contraseña Incorrecta");
                 return;
             }
             this.setVisible(false);
             Container parent= this.getParent();
             parent.removeAll();
-            MenuPrincipal mp= new MenuPrincipal();
+            MenuPrincipal mp= new MenuPrincipal(user);
             mp.setBounds(0,0,1366,768);
             mp.cargarComponentes();
             mp.setVisible(true);
@@ -135,17 +138,19 @@ public class MenuLogIn extends MenuBase{
         btnNewCuenta.setBackground(new Color(0xF7F4F0));
         btnNewCuenta.setForeground(new Color(0x3A9AFF));
         btnNewCuenta.setBorderPainted(false);
+        btnNewCuenta.setMargin(new Insets(0,0,0,0));
+        btnNewCuenta.setContentAreaFilled(false);
         btnNewCuenta.addActionListener(e->{
             this.remove(n);
-        register= new MenuRegistro();
-        register.setLayout(null);
-        register.setBounds(550,130,350,450);
-        register.cargarComponentes();
-        register.setBackground(new Color(0xF7F4F0));
-        register.setVisible(true);
-        add(register);
-        this.repaint();
-        this.revalidate();
+            register= new MenuRegistro();
+            register.setLayout(null);
+            register.setBounds(550,130,350,450);
+            register.cargarComponentes();
+            register.setBackground(new Color(0xFAFAFA));
+            register.setVisible(true);
+            add(register);
+            this.repaint();
+            this.revalidate();
         
         });
         /*

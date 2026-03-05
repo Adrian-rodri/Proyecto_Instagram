@@ -21,10 +21,12 @@ public class GestorUsuarios {
     RandomAccessFile users=null;
     public void registrarUser(User actual){
         try{
-        users = new RandomAccessFile("INSTA_RAIZ/users.ins", "rw");
-        users.seek(users.length());
-        writeUser(actual);
-        crearFolderConFiles(actual);
+            new File("INSTA_RAIZ").mkdirs();
+            new File("INSTA_RAIZ/users.ins").createNewFile();
+            users = new RandomAccessFile("INSTA_RAIZ/users.ins", "rw");
+            users.seek(users.length());
+            writeUser(actual);
+            crearFolderConFiles(actual);
         }catch(IOException e){
             System.err.println("Error: "+ e.getMessage());
         }finally{
@@ -178,6 +180,8 @@ public class GestorUsuarios {
         file= new File("INSTA_RAIZ/" + actual.getUserName()+"/insta.ins");
         file.createNewFile();
         file= new File("INSTA_RAIZ/" + actual.getUserName()+"/stickers.ins");
+        file.createNewFile();
+        file= new File("INSTA_RAIZ/" + actual.getUserName()+"/contador.ins");
         file.createNewFile();
     }
 }

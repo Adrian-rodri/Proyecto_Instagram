@@ -37,6 +37,7 @@ public class MenuRegistro extends MenuBase{
         Border linea = BorderFactory.createLineBorder(Color.BLACK);
         txtName.setBorder(linea);
         txtName.setFont(font);
+        txtName.setBackground(new Color(0xFAFAFA));
         
         /*
         Text field de username
@@ -46,6 +47,7 @@ public class MenuRegistro extends MenuBase{
         txtUser.setBounds(50,208,250,40);
         txtUser.setBorder(linea);
         txtUser.setFont(font);
+        txtUser.setBackground(new Color(0xFAFAFA));
         /*
         Elegir genero
         */
@@ -54,6 +56,7 @@ public class MenuRegistro extends MenuBase{
         combGenero.setBounds(50,164,250,40);
         combGenero.setBorder(linea);
         combGenero.setFont(font);
+        combGenero.setBackground(new Color(0xFAFAFA));
         /*
         Tect field contrasena
         */
@@ -61,6 +64,7 @@ public class MenuRegistro extends MenuBase{
         txtContra.setBounds(50,252, 250,40);
         txtContra.setBorder(linea);
         txtContra.setFont(font);
+        txtContra.setBackground(new Color(0xFAFAFA));
         /*
         Text field confirmar contrasena
         */
@@ -68,6 +72,7 @@ public class MenuRegistro extends MenuBase{
         txtConfirm.setBounds(50,296, 250,40);
         txtConfirm.setBorder(linea);
         txtConfirm.setFont(font);
+        txtConfirm.setBackground(new Color(0xFAFAFA));
         /*
         Spiner Fecha de nacimiento
         */
@@ -78,6 +83,7 @@ public class MenuRegistro extends MenuBase{
         spinnerFecha.setBounds(50, 340, 250, 40);
         spinnerFecha.setBorder(linea);
         spinnerFecha.setFont(font);
+        spinnerFecha.setBackground(new Color(0xFAFAFA));
         /*
         Boton guardar usuario
         */
@@ -143,9 +149,10 @@ public class MenuRegistro extends MenuBase{
         JButton btnLogin= new JButton("Ya tienes una Cuenta, Log In");
         btnLogin.setBounds(55, 420, 240,30);
         btnLogin.setFont(new Font("SANS_SERIF",Font.PLAIN,13));
-        btnLogin.setBackground(new Color(0xF7F4F0));
         btnLogin.setForeground(new Color(0x3A9AFF));
         btnLogin.setBorderPainted(false);
+        btnLogin.setMargin(new Insets(0,0,0,0));
+        btnLogin.setContentAreaFilled(false);
         btnLogin.addActionListener(e->{
             this.setVisible(false);
             Container parent=this.getParent();
