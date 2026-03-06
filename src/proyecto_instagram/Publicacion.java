@@ -6,7 +6,7 @@ package proyecto_instagram;
  * @author adria
  */
 import java.io.*;
-public class Publicacion {
+public class Publicacion  {
     private int codigoUnico;
     private String username;
     private long fecha;
@@ -15,8 +15,9 @@ public class Publicacion {
     private String menciones;
     private String rutaImagen;
     private RandomAccessFile rcode;
+    private TipoMultimedia tipoMultimedia;
     
-    Publicacion(String username, String texto, String hashtags, String menciones, String ruta){
+    Publicacion(String username, String texto, String hashtags, String menciones, String ruta, TipoMultimedia tipoMultimedia){
         this.username=username;
         this.textoContenido=texto;
         this.hashtags=hashtags;
@@ -24,8 +25,9 @@ public class Publicacion {
         this.rutaImagen=ruta;
         this.fecha=System.currentTimeMillis();
         this.codigoUnico=generarCodigo();
+        this.tipoMultimedia=tipoMultimedia;
     }
-    Publicacion(int code, String username, long fecha,String texto, String hashtags, String menciones, String ruta){
+    Publicacion(int code, String username, long fecha,String texto, String hashtags, String menciones, String ruta, TipoMultimedia tipoMultimedia){
         this.username=username;
         this.textoContenido=texto;
         this.hashtags=hashtags;
@@ -33,6 +35,7 @@ public class Publicacion {
         this.rutaImagen=ruta;
         this.fecha=fecha;
         this.codigoUnico=code;
+        this.tipoMultimedia=tipoMultimedia;
     }
     private int generarCodigo(){
         int code=0;
@@ -85,6 +88,9 @@ public class Publicacion {
     }
     public int getCodigo(){
         return codigoUnico;
+    }
+    public String getTipoMultimedia(){
+        return tipoMultimedia.name();
     }
     
 }

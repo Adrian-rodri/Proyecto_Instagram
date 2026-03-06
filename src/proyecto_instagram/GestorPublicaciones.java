@@ -6,7 +6,7 @@ package proyecto_instagram;
  */
 import java.io.*;
 import java.util.ArrayList;
-public class GestorPublicaciones {
+public class GestorPublicaciones implements Publicable{
     /*
         1. writeInt(code)
         2. writeUTF(username)
@@ -15,13 +15,15 @@ public class GestorPublicaciones {
         5. writeUTF(hashtags)
         6. writeUTF(menciones)
         7. writeUTF(rutaImagen)
+        8. writeUTF(tipoCuenta);
     */
     User actual;
     RandomAccessFile post=null;
     GestorPublicaciones(User user){
         this.actual=user;
     }
-    public void postear(Publicacion publicacion){
+    @Override
+    public void publicar(Publicacion publicacion){
     try{
         post= new RandomAccessFile("INSTA_RAIZ/" + actual.getUserName()+"/insta.ins","rw");
         post.seek(post.length());
@@ -32,6 +34,7 @@ public class GestorPublicaciones {
         post.writeUTF(publicacion.getHashtags());
         post.writeUTF(publicacion.getMenciones());
         post.writeUTF(publicacion.getRutaImagen());
+        post.writeUTF(publicacion.getTipoMultimedia());
     }catch(IOException e){
         System.out.println("Error: "+ e.getMessage());
     }finally{
@@ -44,7 +47,8 @@ public class GestorPublicaciones {
     }
     
     }
-    public void deletePost(Publicacion publicacion){
+    @Override
+    public void eliminarPublicacion(Publicacion publicacion){
         ArrayList<Publicacion> arrayPubli= new ArrayList<>();
         int index=-1;
         try{
@@ -59,7 +63,8 @@ public class GestorPublicaciones {
                 String hashtags= post.readUTF();
                 String menciones= post.readUTF();
                 String ruta= post.readUTF();
-                Publicacion nuevaPubli= new Publicacion(code,user,fecha,texto,hashtags,menciones,ruta);
+                TipoMultimedia tipo= TipoMultimedia.valueOf(post.readUTF());
+                Publicacion nuevaPubli= new Publicacion(code,user,fecha,texto,hashtags,menciones,ruta,tipo);
                 arrayPubli.add(nuevaPubli);
                 if(code==publicacion.getCodigo())
                     index=i;
@@ -77,6 +82,7 @@ public class GestorPublicaciones {
                 post.writeUTF(p.getHashtags());
                 post.writeUTF(p.getMenciones());
                 post.writeUTF(p.getRutaImagen());
+                post.writeUTF(p.getTipoMultimedia());
             }
             
         }catch(IOException e){
@@ -90,7 +96,7 @@ public class GestorPublicaciones {
             }
         }
     }
-    private ArrayList<Publicacion> getPublicaciones(User actual){
+    public ArrayList<Publicacion> getPublicaciones(User actual){
         ArrayList<Publicacion> arrayPubli= new ArrayList<>();
         try{
             post= new RandomAccessFile("INSTA_RAIZ/" + actual.getUserName()+"/insta.ins","r");
@@ -103,7 +109,8 @@ public class GestorPublicaciones {
                 String hashtags= post.readUTF();
                 String menciones= post.readUTF();
                 String ruta= post.readUTF();
-                Publicacion nuevaPubli= new Publicacion(code,user,fecha,texto,hashtags,menciones,ruta);
+                TipoMultimedia tipo= TipoMultimedia.valueOf(post.readUTF());
+                Publicacion nuevaPubli= new Publicacion(code,user,fecha,texto,hashtags,menciones,ruta,tipo);
                 arrayPubli.add(nuevaPubli);
             }
         }catch(IOException e){
@@ -135,7 +142,7 @@ public class GestorPublicaciones {
         ordenarPosts(feed, feed.size());
         return feed;
     }
-    private void ordenarPosts(ArrayList<Publicacion> lista, int n){
+    public void ordenarPosts(ArrayList<Publicacion> lista, int n){
     if(n<= 1)
         return;
     ordenarPosts(lista, n - 1);
@@ -148,6 +155,7 @@ public class GestorPublicaciones {
     }
     lista.set(j + 1, ultimo);
     }
+
     
         
     

@@ -9,6 +9,6 @@ package proyecto_instagram;
  * @author adria
  */
 public interface Publicable {
-    void  publicar();
-    void eliminarPublicacion();
+    void  publicar(Publicacion publicacion);
+    void eliminarPublicacion(Publicacion publicacion);
 }

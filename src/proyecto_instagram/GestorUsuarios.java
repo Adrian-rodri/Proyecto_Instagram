@@ -39,8 +39,14 @@ public class GestorUsuarios {
     }
     public User login(String username, String password){
         User usuario= buscarUser(username);
-        if(usuario !=null && usuario.isEstadoActivo() && usuario.getPassword().equals(password))
-            return usuario;
+        if(usuario !=null && usuario.isEstadoActivo() && usuario.getPassword().equals(password)){
+            try {
+                crearFolderConFiles(usuario);
+                return usuario;
+            } catch (IOException ex) {
+                System.getLogger(GestorUsuarios.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+        }
         return null;
     }
     public User buscarUser(String username){
@@ -169,8 +175,12 @@ public class GestorUsuarios {
         users.writeBoolean(user.isEstadoActivo());
     }
     private void crearFolderConFiles(User actual)throws IOException{
-        File carpeta = new File("INSTA_RAIZ/" + actual.getUserName());
+        File carpeta = new File("INSTA_RAIZ/" + actual.getUserName()+"/imagenes");
         carpeta.mkdirs();
+        carpeta= new File("INSTA_RAIZ/" + actual.getUserName()+"/folders_personales");
+        carpeta.mkdir();
+        carpeta= new File("INSTA_RAIZ/" + actual.getUserName()+"/stickers_personales");
+        carpeta.mkdir();
         File file= new File("INSTA_RAIZ/" + actual.getUserName()+"/followers.ins");
         file.createNewFile();
         file= new File("INSTA_RAIZ/" + actual.getUserName()+"/following.ins");

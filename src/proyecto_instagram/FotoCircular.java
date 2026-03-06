@@ -27,7 +27,7 @@ public class FotoCircular extends JPanel{
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
         if(ruta.isEmpty()){
-            // dibujar círculo gris con inicial
+            //dibujar círculo gris con inicial
             g2.setColor(Color.GRAY);
             g2.fillOval(0, 0, getWidth(), getHeight());
             g2.setColor(Color.WHITE);

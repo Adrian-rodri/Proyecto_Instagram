@@ -48,9 +48,8 @@ public class MenuPrincipal extends MenuBase{
         /*
         Panel crear
         */
-        PanelCrear pC= new PanelCrear();
+        PanelCrear pC= new PanelCrear(user);
         pC.setBounds(200,0,1155,732);
-        pC.setBackground(Color.pink);
         pC.cargarComponentes();
         pC.setVisible(false);
         /*
@@ -145,6 +144,7 @@ public class MenuPrincipal extends MenuBase{
         btnPerfil.setMargin(new Insets(0,0,0,0));
         btnPerfil.setContentAreaFilled(false);
         btnPerfil.addActionListener(e->{
+            pF.refresh();
             pH.setVisible(false);
             pI.setVisible(false);
             pC.setVisible(false);
